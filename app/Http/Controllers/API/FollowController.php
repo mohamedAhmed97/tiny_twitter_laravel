@@ -19,9 +19,7 @@ class FollowController extends Controller
 
     public function store(Request $request, $follower_id)
     {
-        $user = $request->user();
-        // User::findOrFail($user->id)->followers()->attach(User::findOrFail($follower_id));
-        $this->followRepository->create($user->id, $follower_id);
+        $this->followRepository->create($request->user()->id, $follower_id);
         return new FollowResource(User::findOrFail($follower_id));
     }
 }

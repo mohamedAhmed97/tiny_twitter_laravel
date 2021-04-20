@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function __construct(RegisterService $registerService, LoginService $loginService)
     {
-        $this->middleware('throttle:3,1')->only('login');
+        $this->middleware('throttle:3,30')->only('login');
         $this->loginService = $loginService;
         $this->registerService=$registerService;
 
