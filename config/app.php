@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\UserServiceProvider::class,
         App\Providers\TweetServiceProvider::class,
+        App\Providers\FollowServiceProvider::class,
 
 
     ],

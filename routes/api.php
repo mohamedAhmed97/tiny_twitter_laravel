@@ -26,8 +26,4 @@ Route::post('/users', [UserController::class, 'register']);
 
 Route::post('/tweets', [TweetController::class, 'store']);
 
-Route::post('/follow/{id}',[FollowController::class,'store']);
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::post('/follow/{follower_id}', [FollowController::class, 'store']);

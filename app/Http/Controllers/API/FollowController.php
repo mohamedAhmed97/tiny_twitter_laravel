@@ -6,17 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\FollowResource;
+use App\Repository\FollowRepositoryInterface;
+
 class FollowController extends Controller
 {
-    public function __construct()
+    private $followRepository;
+    public function __construct(FollowRepositoryInterface $followRepository)
     {
         $this->middleware('auth:sanctum');
+        $this->followRepository = $followRepository;
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request, $follower_id)
     {
         $user = $request->user();
-        User::findOrFail($user->id)->followers()->attach(User::findOrFail($id));
-        return new FollowResource(User::findOrFail($id));
+        // User::findOrFail($user->id)->followers()->attach(User::findOrFail($follower_id));
+        $this->followRepository->create($user->id, $follower_id);
+        return new FollowResource(User::findOrFail($follower_id));
     }
 }
