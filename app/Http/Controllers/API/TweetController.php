@@ -20,7 +20,8 @@ class TweetController extends Controller
     }
     public function store(TweetPostRequest $request)
     {
-        $tweet = $this->tweetRepository->create($request);
+        $data = $request->only(['text']);
+        $tweet = $this->tweetRepository->create($data,$request->user()->id);
         return new TweetResource($tweet);
     }
 }

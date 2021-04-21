@@ -14,8 +14,9 @@ class RegisterService
 
     public function handleRegister($request)
     {
-        $user_avatar_name = time() . $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs(
+        // dd($request);
+        $user_avatar_name = time() . $request['image']->getClientOriginalName();
+        $path = $request['image']->storeAs(
             'public/user',
             $user_avatar_name
         );

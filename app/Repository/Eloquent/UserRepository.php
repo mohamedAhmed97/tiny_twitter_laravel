@@ -11,17 +11,17 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAll()
     {
-      return User::all();
+        return User::all();
     }
-    
-    public function create($data,$imageName)
+
+    public function create($data, $imageName)
     {
-       return User::create([
-            'name' => $data->name,
-            'email' => $data->email,
-            'password' => Hash::make($data->password),
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
             'image' => $imageName,
-            'date_of_birth' => $data->date_of_birth
+            'date_of_birth' => $data['date_of_birth']
         ]);
     }
 

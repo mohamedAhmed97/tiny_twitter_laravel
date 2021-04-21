@@ -22,18 +22,25 @@ class UserController extends Controller
     {
         $this->middleware('throttle:3,30')->only('login');
         $this->loginService = $loginService;
-        $this->registerService=$registerService;
-
+        $this->registerService = $registerService;
     }
 
     public function register(RegisterRequest $request)
     {
-        $user=$this->registerService->handleRegister($request);
+        $data = $request->only([
+            'email', 'name', 'password',
+            'passowrd_confirmation',
+            'date_of_birth', 'image'
+        ]);
+        $user = $this->registerService->handleRegister($data);
         return new UserResource($user);
     }
 
     function login(LoginRequest $request)
     {
-        return $this->loginService->handle($request);
+        $data = $request->only([
+            'email', 'password', 'device_name'
+        ]);
+        return $this->loginService->handle($data);
     }
 }
