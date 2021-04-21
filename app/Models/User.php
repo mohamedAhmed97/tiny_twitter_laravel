@@ -44,7 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Tweets()
+    public function tweets()
     {
         return $this->hasMany('App\Models\Tweet');
     }

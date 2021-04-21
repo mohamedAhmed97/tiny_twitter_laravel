@@ -3,26 +3,21 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Repository\UserRepositoryInterface;
-use App\Repository\Elquent\UserRepository;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
-use App\Services\LoginService;
-use App\Services\RegisterService;
+use App\Services\AuthService;
 
 class UserController extends Controller
 {
 
-    private $loginService;
-    private $registerService;
+    private $authService;
 
-    public function __construct(RegisterService $registerService, LoginService $loginService)
+
+    public function __construct(AuthService $authService)
     {
-        $this->middleware('throttle:3,30')->only('login');
-        $this->loginService = $loginService;
-        $this->registerService = $registerService;
+        $this->middleware('throttle:5,30')->only('login');
+        $this->authService = $authService;
     }
 
     public function register(RegisterRequest $request)
@@ -30,9 +25,9 @@ class UserController extends Controller
         $data = $request->only([
             'email', 'name', 'password',
             'passowrd_confirmation',
-            'date_of_birth', 'image'
+            'date_of_birth',
         ]);
-        $user = $this->registerService->handleRegister($data);
+        $user = $this->authService->handleRegister($data, $request->file('image'));
         return new UserResource($user);
     }
 
@@ -41,6 +36,6 @@ class UserController extends Controller
         $data = $request->only([
             'email', 'password', 'device_name'
         ]);
-        return $this->loginService->handle($data);
+        return $this->authService->handleLogin($data);
     }
 }

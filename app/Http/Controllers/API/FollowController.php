@@ -4,22 +4,20 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Http\Resources\FollowResource;
-use App\Repository\FollowRepositoryInterface;
+use  App\Services\FollowService;
 
 class FollowController extends Controller
 {
-    private $followRepository;
-    public function __construct(FollowRepositoryInterface $followRepository)
+    private $followService;
+    public function __construct(FollowService $followService)
     {
         $this->middleware('auth:sanctum');
-        $this->followRepository = $followRepository;
+        $this->followService = $followService;
     }
 
-    public function store(Request $request, $follower_id)
+    public function store(Request $request, $follower)
     {
-        $this->followRepository->create($request->user()->id, $follower_id);
-        return new FollowResource(User::findOrFail($follower_id));
+        $this->followService->create($request->user()->id, $follower);
+        return response(201);
     }
 }

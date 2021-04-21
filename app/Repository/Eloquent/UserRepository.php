@@ -11,18 +11,14 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAll()
     {
-        return User::all();
+        return User::with('tweets')->get();
     }
 
     public function create($data, $imageName)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'image' => $imageName,
-            'date_of_birth' => $data['date_of_birth']
-        ]);
+        $data['image'] = $imageName;
+        $data['password'] = Hash::make($data['password']);
+        return User::create($data);
     }
 
 
@@ -30,4 +26,5 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::where('email', $email)->first();
     }
+
 }

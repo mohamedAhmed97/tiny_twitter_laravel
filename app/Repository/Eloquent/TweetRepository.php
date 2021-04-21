@@ -14,4 +14,9 @@ class TweetRepository implements TweetRepositoryInterface
             'user_id' => $user_id
         ]);
     }
+
+    public function countTweets()
+    {
+      return Tweet::all()->count();
+    }
 }

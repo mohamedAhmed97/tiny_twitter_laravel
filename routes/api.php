@@ -26,4 +26,4 @@ Route::post('/register', [UserController::class, 'register']);
 
 Route::post('/tweets', [TweetController::class, 'store']);
 
-Route::post('/follow/{follower_id}', [FollowController::class, 'store']);
+Route::post('/follow/{follower}', [FollowController::class, 'store']);

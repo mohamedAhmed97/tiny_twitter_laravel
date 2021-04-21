@@ -3,25 +3,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Tweet\TweetPostRequest;
-use App\Models\Tweet;
-use App\Repository\Eloquent\TweetRepository;
 use App\Http\Resources\TweetResource;
+use App\Services\TweetService;
 
 class TweetController extends Controller
 {
-    private $tweetRepository;
+    private $tweetService;
 
-    public function __construct(TweetRepository $tweetRepository)
+    public function __construct(TweetService $tweetService)
     {
         $this->middleware('auth:sanctum');
-        $this->tweetRepository = $tweetRepository;
+        $this->tweetService = $tweetService;
     }
     public function store(TweetPostRequest $request)
     {
-        $data = $request->only(['text']);
-        $tweet = $this->tweetRepository->create($data,$request->user()->id);
+        $tweet = $this->tweetService->create($request->only(['text']), $request->user()->id);
         return new TweetResource($tweet);
     }
 }

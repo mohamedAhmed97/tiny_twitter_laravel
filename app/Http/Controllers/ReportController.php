@@ -6,7 +6,7 @@ use PDF;
 use App\Models\User;
 use App\Services\PDFService;
 
-class UserController extends Controller
+class ReportController extends Controller
 {
     private $pdfService;
     public function __construct(PDFService $pdfService)
