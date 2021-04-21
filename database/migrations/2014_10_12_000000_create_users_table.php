@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('image');
             $table->date('date_of_birth');
-            $table->boolean('block')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

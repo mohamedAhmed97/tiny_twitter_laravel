@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository implements UserRepositoryInterface
 {
 
+    public function getAll()
+    {
+      return User::all();
+    }
+    
     public function create($data,$imageName)
     {
        return User::create([
