@@ -18,6 +18,6 @@ class FollowController extends Controller
     public function store(Request $request, $follower)
     {
         $this->followService->create($request->user()->id, $follower);
-        return response(201);
+        return response(['message' => 'you followed the user']);
     }
 }
